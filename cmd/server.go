@@ -14,6 +14,7 @@ func main() {
 	// Define the routes
 
 	r.POST("/api/redeem", handler.RedeemPoints)
+	r.GET("/api/balance", handler.GetBalance)
 
 	// Start the server on port 8080
 	if err := r.Run(":8080"); err != nil {

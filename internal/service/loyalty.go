@@ -73,3 +73,29 @@ func RedeemPoints(accountID string, points int) error {
 
 	return nil
 }
+
+// Get the loyalty account balance
+func GetBalance(accountID string) (int, error) {
+	// Initialize Square client
+	client := getSquareClient()
+
+	// Make the request to retrieve the loyalty account details
+	response, err := client.Loyalty.Accounts.Get(
+		context.TODO(),
+		&loyalty.GetAccountsRequest{
+			AccountID: accountID,
+		},
+	)
+
+	if err != nil {
+		log.Printf("Error retrieving loyalty account: %v", err)
+		return 0, fmt.Errorf("failed to retrieve loyalty account for account %s", accountID)
+	}
+
+	// Return the loyalty account balance
+	if response.LoyaltyAccount.Balance != nil {
+		return *response.LoyaltyAccount.Balance, nil // Dereference the pointer
+	}
+
+	return 0, fmt.Errorf("balance is not available for account %s", accountID)
+}

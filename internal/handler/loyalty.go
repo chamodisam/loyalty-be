@@ -47,3 +47,23 @@ func RedeemPoints(c *gin.Context) {
 		"message": fmt.Sprintf("Redeemed %d loyalty points", points),
 	})
 }
+
+// Get the loyalty balance for a user
+func GetBalance(c *gin.Context) {
+	// Get account_id from query parameter
+	accountID := c.DefaultQuery("account_id", "")
+
+	// Call the service to retrieve the balance
+	balance, err := service.GetBalance(accountID)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	// Return the balance
+	c.JSON(http.StatusOK, gin.H{
+		"balance": balance,
+	})
+}
