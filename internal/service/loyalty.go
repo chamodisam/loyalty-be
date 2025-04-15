@@ -7,12 +7,22 @@ import (
 
 	"os"
 
+	"github.com/google/uuid"
 	"github.com/joho/godotenv"
 	"github.com/square/square-go-sdk"
 	"github.com/square/square-go-sdk/client"
 	"github.com/square/square-go-sdk/loyalty"
 	"github.com/square/square-go-sdk/option"
 )
+
+// Function to generate a unique idempotency key
+func generateIdempotencyKey() string {
+	// Generate a new UUID
+	idempotencyKey := uuid.New().String()
+
+	// Return the idempotency key
+	return idempotencyKey
+}
 
 // Initialize Square Client
 func getSquareClient() *client.Client {
@@ -38,6 +48,7 @@ func getSquareClient() *client.Client {
 func RedeemPoints(accountID string, points int) error {
 	// Initialize Square client
 	client := getSquareClient()
+	idempotencyKey := generateIdempotencyKey()
 
 	// Prepare the request to adjust (redeem) loyalty points
 	redeemRequest := &loyalty.AdjustLoyaltyPointsRequest{
@@ -46,7 +57,7 @@ func RedeemPoints(accountID string, points int) error {
 			Points: points,                                    // Adjust points to redeem
 			Reason: square.String("Redeem points for reward"), // Reason for adjustment
 		},
-		IdempotencyKey: "e58e4d82-b0bd-4bef-b30c-5adf9922c970", // Replace with a unique key
+		IdempotencyKey: idempotencyKey,
 	}
 
 	// Call the Square API to redeem the points
