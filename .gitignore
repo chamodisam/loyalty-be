@@ -1,0 +1,35 @@
+# Go binary and object files
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.out
+*.a
+
+# Go modules and dependencies
+/vendor/
+Godeps/
+
+# IDE and editor files
+.vscode/
+
+# MacOS specific files
+.DS_Store
+
+# Log files
+*.log
+
+# Build directories
+/build/
+bin/
+
+# Test output
+*.test
+
+# Coverage reports
+*.coverprofile
+*.out
+
+# Environment configuration files
+.env
