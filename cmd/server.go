@@ -17,6 +17,10 @@ func main() {
 	r.POST("/api/redeem", handler.RedeemPoints)
 	r.GET("/api/balance", handler.GetBalance)
 
+	// Google OAuth routes
+	r.GET("/auth/google", handler.Login)             // Redirect to Google OAuth login
+	r.GET("/auth/google/callback", handler.Callback) // Handle Google OAuth callback
+
 	// Start the server on port 8080
 	if err := r.Run(":8080"); err != nil {
 		fmt.Println("Error starting server:", err)
