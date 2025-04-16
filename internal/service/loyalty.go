@@ -54,7 +54,7 @@ func RedeemPoints(accountID string, points int) error {
 	redeemRequest := &loyalty.AdjustLoyaltyPointsRequest{
 		AccountID: accountID,
 		AdjustPoints: &square.LoyaltyEventAdjustPoints{
-			Points: points,                                    // Adjust points to redeem
+			Points: -points,                                   // Adjust points to redeem
 			Reason: square.String("Redeem points for reward"), // Reason for adjustment
 		},
 		IdempotencyKey: idempotencyKey,
