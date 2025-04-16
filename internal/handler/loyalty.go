@@ -48,6 +48,45 @@ func RedeemPoints(c *gin.Context) {
 	})
 }
 
+// Earn points handler
+func EarnPoints(c *gin.Context) {
+	var requestBody struct {
+		AccountID string `json:"account_id"` // JSON field name should match the incoming JSON body
+		Points    string `json:"points"`
+	}
+
+	// Bind the JSON request body to the struct
+	if err := c.ShouldBindJSON(&requestBody); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid request body",
+		})
+		return
+	}
+
+	// Convert points from string to integer
+	points, err := strconv.Atoi(requestBody.Points)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid points value",
+		})
+		return
+	}
+	accountID := requestBody.AccountID
+
+	// Call the service function to earn points
+	err = service.EarnPoints(accountID, points)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": fmt.Sprintf("Earned %d loyalty points", points),
+	})
+}
+
 // Get the loyalty balance for a user
 func GetBalance(c *gin.Context) {
 	// Get account_id from query parameter

@@ -13,6 +13,7 @@ func main() {
 
 	// Define the routes
 
+	r.POST("/api/earn", handler.EarnPoints)
 	r.POST("/api/redeem", handler.RedeemPoints)
 	r.GET("/api/balance", handler.GetBalance)
 

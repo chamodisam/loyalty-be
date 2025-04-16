@@ -74,6 +74,35 @@ func RedeemPoints(accountID string, points int) error {
 	return nil
 }
 
+func EarnPoints(accountID string, points int) error {
+	// Initialize Square client
+	client := getSquareClient()
+	idempotencyKey := generateIdempotencyKey()
+
+	// Prepare the request to adjust (earn) loyalty points
+	redeemRequest := &loyalty.AdjustLoyaltyPointsRequest{
+		AccountID: accountID,
+		AdjustPoints: &square.LoyaltyEventAdjustPoints{
+			Points: points,
+			Reason: square.String("Earn points"), // Reason for adjustment
+		},
+		IdempotencyKey: idempotencyKey,
+	}
+
+	// Call the Square API to earn the points
+	_, err := client.Loyalty.Accounts.Adjust(
+		context.TODO(),
+		redeemRequest,
+	)
+
+	if err != nil {
+		log.Printf("Error earning points: %v", err)
+		return fmt.Errorf("failed to earn points for account %s", accountID)
+	}
+
+	return nil
+}
+
 // Get the loyalty account balance
 func GetBalance(accountID string) (int, error) {
 	// Initialize Square client
