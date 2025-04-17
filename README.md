@@ -105,8 +105,8 @@ Failure:
 ```json
 {"message": "Failed to redeem points."}
 ```
-#### GET `/loyalty/balance`
-Description: This endpoint returns the current loyalty balance of a user.
+#### GET `/api/balance?account_id=`
+Description: This endpoint returns the current loyalty balance of an account.
 
 **Response**:
 
