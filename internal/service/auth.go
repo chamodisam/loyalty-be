@@ -18,7 +18,7 @@ import (
 var GoogleOauthConfig = oauth2.Config{
 	ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),                // Replace with your Google Client ID
 	ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),            // Replace with your Google Client Secret
-	RedirectURL:  "http://localhost:8080/auth/google/callback", // Google redirect URL
+	RedirectURL:  "http://localhost:5175/auth/google/callback", // Google redirect URL
 	Scopes:       []string{"email", "profile"},
 	Endpoint:     google.Endpoint,
 }
@@ -30,7 +30,7 @@ func init() {
 	GoogleOauthConfig = oauth2.Config{
 		ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),                // Google Client ID from the .env file
 		ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),            // Google Client Secret from the .env file
-		RedirectURL:  "http://localhost:8080/auth/google/callback", // Google Redirect URL
+		RedirectURL:  "http://localhost:5175/auth/google/callback", // Google Redirect URL
 		Scopes:       []string{"email", "profile"},                 // Scopes for Google OAuth
 		Endpoint:     google.Endpoint,                              // Google OAuth endpoint
 	}

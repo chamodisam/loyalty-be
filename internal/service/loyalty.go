@@ -26,7 +26,7 @@ func generateIdempotencyKey() string {
 
 // Initialize Square Client
 func getSquareClient() *client.Client {
-	err := godotenv.Load()
+	err := godotenv.Load("/Users/chamodisamarawickrama/Documents/qlub-assignment/loyalty-program-be/.env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
